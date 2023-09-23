@@ -1,0 +1,267 @@
+
+ import React, { useState, useEffect } from 'react';
+  import axios from 'axios';
+  import Dialog from '@mui/material/Dialog';
+  import DialogActions from '@mui/material/DialogActions';
+  import DialogContent from '@mui/material/DialogContent';
+  import DialogContentText from '@mui/material/DialogContentText';
+  import DialogTitle from '@mui/material/DialogTitle';
+  import Button from '@mui/material/Button';
+  import MenuAppBar from './nav_bar';
+  import { useParams } from 'react-router-dom';
+  import { Link } from 'react-router-dom';
+
+  import CardActions from '@mui/material/CardActions';
+  import { CardActionArea } from '@mui/material';
+
+  import Container from '@mui/material/Container';
+  import Box from '@mui/material/Box';
+  import { Card, CardContent, Typography, TextField } from '@mui/material';
+  import REP from './rep';
+  import InputLabel from '@mui/material/InputLabel';
+  import MenuItem from '@mui/material/MenuItem';
+  import FormControl from '@mui/material/FormControl';
+  import Select from '@mui/material/Select';
+  
+
+  const REP2 = () => {
+    const [projects, setProjects] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [count, setCount] = useState(0);
+    let { proid } = useParams();
+    const [setid, setID] = useState([]);
+    const [textInputValue, setTextInputValue] = useState('Default Text');
+    const [commentInputValue, setCommentInputValue] = useState('');
+    const [attachment, setAttachment] = useState(null);
+    const [weekStatus, setWeekStatus] = useState({}); // Store week statuses
+    const [weekIndex, setWeekIndex] = useState('');
+  
+
+  useEffect(() => {
+      getData();
+      const currentURL = window.location.href;
+      const weekIndex = currentURL.indexOf('week');
+
+      if (weekIndex !== -1) {
+        const week = currentURL.slice(weekIndex, weekIndex + 5);
+        console.log(week); // 'week1' will be logged
+      }
+    }, []);
+
+
+    const handlePutData = async (id, weekIndex, updatedData) => {
+      try {
+        const response = await axios.put(`http://localhost:5000/api/projects?id=${encodeURIComponent(id)}&weekIndex=${encodeURIComponent(weekIndex)}/comments`, updatedData);
+        
+        console.log(response);
+        if (response.status === 200) {
+          // Handle success, e.g., show a success message or update state.
+          console.log('PUT request successful:', response.data);
+        } else {
+          console.log('PUT request failed with status code:', response.status);
+          // Handle the error, show an error message, or update state accordingly.
+        }
+      } catch (error) {
+        console.error('Error making PUT request:', error);
+        // Handle network errors or other exceptions here.
+      }
+    };
+    
+
+    const getData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/projects?id=${proid}`);
+
+        if (response.status === 200) {
+          const data = response.data;
+          setProjects(data);
+          setSelectedProject(data);
+          console.log("DATA", data.weeks);
+          //console.log(data.weeks[0]['Week1'].name);
+          setCount(data.duration);
+          setID(data.student_id);
+
+        } else {
+          console.log('The request failed with status code:', response.status);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  
+  console.log(projects)
+  // console.log(projects.weeks[0]['Week1'].name);
+    const handleClickOpen = (project) => {
+      setSelectedProject(project);
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setSelectedProject(null);
+      setOpen(false);
+    };
+
+    const handleAccept = () => {
+      // Handle accepting the dialog input value here
+      console.log('Accepted Value:', textInputValue);
+
+      setSelectedProject(null);
+      setOpen(false);
+    }
+
+    const handleAddComment = () => {
+      // Handle adding the comment here
+      console.log('Added Comment:', commentInputValue);
+      setCommentInputValue(''); // Clear the comment input field
+    }
+
+    const handleAttachmentUpload = (e) => {
+      // Handle attachment upload here
+      const file = e.target.files[0];
+      setAttachment(file);
+    }
+
+    const handleUploadAttachment = () => {
+      // Handle attachment upload here
+      if (attachment) {
+        console.log('Uploaded Attachment:', attachment.name);
+        // You can send the attachment to the server or perform other actions here
+        setAttachment(null); // Clear the attachment
+      }
+    }
+
+    const [age, setAge] = React.useState('');
+
+    const handleChange = (event) => {
+      setAge(event.target.value);
+
+    };
+
+
+
+    const card = (
+      <Box>
+        <Box>
+        <Card>
+          <CardActionArea>
+            <CardContent>
+              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              {/* {we.weeks[0]['Week1'].name} */}
+              {projects !== undefined && projects.weeks !== undefined && projects.weeks[0]['Week1'] !== undefined &&
+    <p>{projects.weeks[0]['Week1'].name}ooooo</p>
+  }
+              </Typography>
+              USN
+            </CardContent>
+          </CardActionArea>
+          {/* <CardActions>
+          
+          </CardActions> */}  
+        </Card>
+        </Box>
+        </Box>
+    );
+
+    return (
+      <Box>
+        <div>
+          <MenuAppBar />
+          {projects.duration}
+          <p>Count from API: {count}</p>
+        </div>
+        <p>{projects.project_title}ooooo</p>
+        {/* <p>{projects!=undefined&&projects.weeks[0]['Week1'].name}ooooo</p> */}
+        {
+        projects !== undefined && projects.weeks !== undefined && projects.weeks[0]['Week1'] !== undefined &&
+        <p>{projects.weeks[0]['Week1'].name}ooooo</p>
+        }
+
+
+        <Container fixed variant="outlined">
+          <div className='card'>sgerbgerbrberbt</div>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* Comment Section */}
+            <div>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="comment"
+                label="Add Comment"
+                type="text"
+                fullWidth
+                value={commentInputValue}
+                onChange={(e) => setCommentInputValue(e.target.value)}
+              />
+              <Button variant="contained" color="primary" onClick={handlePutData}>
+                Add Comment
+              </Button>
+            </div>
+
+            {/* Attachment Section */}
+            <div>
+              <input type="file" onChange={handleAttachmentUpload} />
+              <Button variant="contained" color="primary" onClick={handleUploadAttachment}>
+                Upload Attachment
+              </Button>
+            </div>
+          </Box>
+
+          <Box sx={{ minWidth: 275 }} className="box">
+            <Card variant="outlined" onClick={() => handleClickOpen(projects)}>{card}</Card>
+            <Box sx={{ minWidth: 150 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Select_State</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="Select_State"
+            onChange={handleChange}
+          >
+
+            <MenuItem value={10}>To_Do</MenuItem>
+            <MenuItem value={20}>In_progress</MenuItem>
+            <MenuItem value={30}>Done</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+          </Box>
+          
+        </Container>
+
+
+        {/* Dialog for Text Input */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Enter Text</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please enter some text:
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="text"
+              label="Text Input"
+              type="text"
+              fullWidth
+              value={textInputValue}
+              onChange={(e) => setTextInputValue(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleAccept} color="primary">
+              Accept
+            </Button>
+          </DialogActions>
+        </Dialog>
+        
+      </Box>
+    );
+  };
+
+  export default REP2;
