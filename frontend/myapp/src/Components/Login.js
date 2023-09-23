@@ -106,7 +106,7 @@ function Login() {
           }}
         >
           <h2 align="center">Login</h2>
-          <Stack>
+          <Stack rowGap={2}>
             <TextField
               type="text"
               name="username"
