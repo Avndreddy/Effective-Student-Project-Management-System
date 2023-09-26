@@ -14,7 +14,7 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 // MongoDB Server Path/URL.
-const uri = 'mongodb://127.0.0.1:27017/vinz';
+const uri = 'mongodb://127.0.0.1:27017/MYDB';
 const client = new MongoClient(uri);
 // Post Method for Signup Details
 app.post('/api/signup', async (req, res) => {
@@ -266,15 +266,15 @@ app.patch('/api/signup/:userId', async (req, res) => {
 
 
 
-// Connect to the database
-async function connectDB() {
-  try {
-    await client.connect();
-    console.log('Connected to the database');
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
-}
+// // Connect to the database
+// async function connectDB() {
+//   try {
+//     await client.connect();
+//     console.log('Connected to the database');
+//   } catch (error) {
+//     console.error('Error connecting to the database:', error);
+//   }
+// }
 
 // Close the database connection
 function closeDB() {
@@ -282,6 +282,84 @@ function closeDB() {
     .then(() => console.log('Database connection closed'))
     .catch(err => console.error('Error closing database connection:', err));
 }
+
+// POST Method to append a comment to an existing document
+app.post('/api/projects/:id/comments', async (req, res) => {
+  const commentToAdd = req.body;
+
+  try {
+    // Connect to the MongoDB server
+    const client = new MongoClient(uri, { useNewUrlParser: true });
+    await client.connect();
+
+    // Get a reference to the database and collection
+    const database = client.db();
+    const collection = database.collection('projects');
+
+    // Find the existing document by its _id
+    const objectId = new ObjectId(req.params.id);
+    const existingDocument = await collection.findOne({ _id: objectId });
+
+    if (!existingDocument) {
+      return res.status(404).send('Document not found');
+    }
+
+    // Append the new comment to the comments array
+    if (!existingDocument.comments) {
+      existingDocument.comments = [];
+    }
+    existingDocument.comments.push(commentToAdd);
+
+    // Update the document in the collection
+    await collection.updateOne({ _id: objectId }, { $set: existingDocument });
+
+    // Close the MongoDB connection
+    client.close();
+
+    res.status(200).send('Comment appended successfully');
+  } catch (error) {
+    console.error('Error appending comment:', error);
+    res.status(500).send('Error appending comment');
+  }
+});
+
+// Get Method to get Comments for a Project
+app.get('/api/projects/:id', async (req, res) => {
+  // Extract the project ID from the request parameters
+  const projectId = req.params.id;
+  
+  // Creating an object of MongoClient
+  const client = new MongoClient(uri);
+  
+  try {
+    // Wait for a connection to the database
+    await client.connect();
+    
+    // Access the database
+    const database = client.db();
+    
+    // Access the projects collection
+    const collection = database.collection('projects');
+    
+    // Find the project with the specified ID
+    const project = await collection.findOne({ _id: new ObjectId(projectId) });
+    
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found.' });
+    }
+    
+    // Extract and return the comments for the project
+    const comments = project.comments;
+    console.log(comments);
+    res.status(200).json(project.comments);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ message: 'An error occurred while retrieving comments.' });
+  } finally {
+    client.close();
+  }
+});
+
 
 
 // Start the server

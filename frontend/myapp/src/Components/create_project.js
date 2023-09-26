@@ -92,8 +92,7 @@ console.log(UserIDD)
       project_description: project_description,
       duration: parseInt(duration),
       student_ids: student_ids,
-      weeks: weekCard,
-      comment: []
+      weeks: weekCard
     };
 
     if (!isLoggedIn) {
