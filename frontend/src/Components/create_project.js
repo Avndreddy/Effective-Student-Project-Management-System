@@ -28,7 +28,13 @@ const CreateProjectCard = () => {
   const Rollno1 = localStorage.getItem('Rollno');
   const UserIDD = localStorage.getItem('userid');
   const [isUsernameAppended, setIsUsernameAppended] = useState(false);
-console.log(UserIDD)
+// console.log(UserIDD)
+
+const pageTitle = "Create Projects Page";
+const additionalArgument = localStorage.getItem("notification");
+
+
+
   const handleClosePopup = () => {
     setShowPopup(false);
   };
@@ -59,7 +65,7 @@ console.log(UserIDD)
         statusData.push({
           name: studentName,
           current_status: "to_do",
-          dod_comment: `This is my current Dod for the week ${i}`,
+          dod_comment: '',
         });
       });
 
@@ -67,7 +73,7 @@ console.log(UserIDD)
         statusData.push({
           name: teacherName,
           current_status: "to_do",
-          dod_comment: `This is my current Dod for the week ${i}`,
+          dod_comment: '',
         });
       });
 
@@ -168,7 +174,7 @@ console.log(UserIDD)
 
   return (
     <Box>
-      <MenuAppBar/>
+      <MenuAppBar title={pageTitle} additionalProp={additionalArgument}/>
       <Box sx={{ display: 'flex', justifyContent: 'center', margin: '10px' }}>
         <form>
           <Stack className="input">
@@ -215,7 +221,7 @@ console.log(UserIDD)
           </Stack>
         </form>
       </Box>
-      {weekCard.map((weekData, index) => (
+      {/* {weekCard.map((weekData, index) => (
         <div key={index} className="week-card">
           {Object.keys(weekData).map((weekNumber) => (
             <div key={weekNumber}>
@@ -230,7 +236,7 @@ console.log(UserIDD)
             </div>
           ))}
         </div>
-      ))}
+      ))} */}
       <Modal
         open={showPopup}
         onClose={handleClosePopup}

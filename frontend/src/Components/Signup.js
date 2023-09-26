@@ -47,7 +47,7 @@ console.log(typeof(data))
 
       <Box sx={{ display: 'flex', justifyContent: 'center', margin: '10px' }}>
         <form onSubmit={(e) => e.preventDefault()}>
-          <Stack>
+          <Stack rowGap={2}>
           <h2 align="center">Signup</h2>
       <TextField
         type="text"

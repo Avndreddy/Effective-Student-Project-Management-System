@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect,axios } from "react";
 import '../App.css';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,15 +21,18 @@ import LogoutButton from './LogoutButton';
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-export default function MenuAppBar() {
+export default function MenuAppBar(props) {
+  const { title, additionalProp } = props;
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const page_Title=title;
+  const [projects, setProjects] = useState([]);
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
 
   const navigate=useNavigate();
+
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -76,11 +79,11 @@ export default function MenuAppBar() {
 
           {/*Title of the page*/}
           <Typography variant="h6" className='page_Title' component="div" sx={{ flexGrow: 1 }}>
-            Current_Page_title
+            {title}
           </Typography>
           {/*Notification Icon*/}
          
-          <Badge badgeContent={4} variant="contained" color="primary">
+          <Badge badgeContent={additionalProp} variant="contained" color="primary">
           <NotificationsIcon onClick={()=> navigate('/request')} />
           
           </Badge>

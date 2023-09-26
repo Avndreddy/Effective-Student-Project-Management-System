@@ -7,16 +7,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import MenuAppBar from './nav_bar';
-import { List } from '@mui/material';
+import { Box, List } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import { alignProperty } from '@mui/material/styles/cssUtils';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-
+  const pageTitle = "Project Requests";
+  const additionalArgument = localStorage.getItem("notification");
   useEffect(() => {
     getData();
   }, []);
@@ -58,17 +60,17 @@ const Projects = () => {
 
   return (
     <div>
-      <MenuAppBar />
-      <h1>Projects</h1>
+      <MenuAppBar title={pageTitle} additionalProp={additionalArgument}/>
+      <Box  display="flex"  // Use flex display to center align both horizontally and vertically
+            flexDirection="column"
+            justifyContent="center"
+            marginTop="0px"
+            minHeight="10vh"
+            >
+       <h1 style={{ textAlign: "center" }}>Projects</h1>
       {projects.map((project) => (
-        <div key={project._id}>
-          {/* <h6>
-            <Button onClick={() => handleClickOpen(project)}>
-              {project.project_title}
-            </Button>
-          </h6>
-          <p>{project.project_description}</p>  {/* displaying contenmts to page*/}
-          <List sx={style} component="nav" aria-label="mailbox folders"> 
+      <div key={project._id}style={{ display: "flex", justifyContent: "center" }}>
+      <List sx={style} component="nav" aria-label="mailbox folders"> 
       
       <Divider />
       <ListItem button divider onClick={() => handleClickOpen(project)}>
@@ -78,7 +80,7 @@ const Projects = () => {
       <Divider light />
 
     </List>
-        </div>
+      </div>
       ))}
       <Dialog
         open={open}
@@ -117,6 +119,7 @@ const Projects = () => {
           </>
         )}
       </Dialog>
+      </Box>
     </div>
   );
 };
