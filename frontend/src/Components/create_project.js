@@ -1,7 +1,6 @@
 // export default CreateProjectCard;
 import React, { useState, useEffect } from 'react';
 import '../App.css';
-import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Stack, Button } from '@mui/material';
@@ -17,14 +16,12 @@ const CreateProjectCard = () => {
   const [duration, setDuration] = useState('');
   const [student_ids, setStudentIds] = useState([]);
   const [weekCard, setWeekCard] = useState([]);
-  const [statuses, setStatuses] = useState(["to_do", "in_progress", "done"]);
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [popupStatus, setPopupStatus] = useState('');
   
   // Check if the user is logged in based on session information
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const username = localStorage.getItem('username');
   const Rollno1 = localStorage.getItem('Rollno');
   const UserIDD = localStorage.getItem('userid');
   const [isUsernameAppended, setIsUsernameAppended] = useState(false);
@@ -41,7 +38,6 @@ const additionalArgument = localStorage.getItem("notification");
 
   const handleStudentIds = (name) => {
     let new_student_ids = name.split(',');
-    new_student_ids = new_student_ids;
      // Append username to student_ids if it hasn't been appended yet
      if (!isUsernameAppended && Rollno1) {
       new_student_ids.push(Rollno1);

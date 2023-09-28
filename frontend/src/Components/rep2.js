@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   TextField,
-  Paper,
   Grid,
   Box,
   FormControl,
@@ -19,23 +18,22 @@ import MenuAppBar from "./nav_bar";
 
 const REP2 = () => {
   const currentURL = window.location.href;
-// Log the current URL to the console
+  // Log the current URL to the console
 
-    console.log("Current URL:", currentURL);
-    const urlParts = currentURL.split('/');
+  console.log("Current URL:", currentURL);
+  const urlParts = currentURL.split("/");
 
-    // Find the last part of the URL
-    const lastPart = urlParts[urlParts.length - 1];
-    
-    // Remove any unwanted characters, such as '%7D' in this case
-    const cleanedLastPart = decodeURIComponent(lastPart);
-    console.log(cleanedLastPart)
-    const inputString = cleanedLastPart;
-    const cleanedString = inputString.replace('}', '');
+  // Find the last part of the URL
+  const lastPart = urlParts[urlParts.length - 1];
 
+  // Remove any unwanted characters, such as '%7D' in this case
+  const cleanedLastPart = decodeURIComponent(lastPart);
+  console.log(cleanedLastPart);
+  const inputString = cleanedLastPart;
+  const cleanedString = inputString.replace("}", "");
 
   const [projects, setProjects] = useState([]);
-  const [textInputs, setTextInputs] = useState('');
+  const [textInputs, setTextInputs] = useState("");
   const [studentAges, setStudentAges] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -43,20 +41,19 @@ const REP2 = () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const username = localStorage.getItem("username");
   const mycomments = localStorage.getItem("myarraycomment");
-const [mycom,setCommentss]=useState();
+  const [mycom, setCommentss] = useState();
   // const name=localStorage.setItem('username', name);
   const rollno = localStorage.getItem("Rollno");
   let { proid } = useParams();
   const pageTitle = cleanedString;
-console.log(mycom)
-// Get the current URL
-const additionalArgument = localStorage.getItem("notification");
+  console.log(mycom);
+  // Get the current URL
+  const additionalArgument = localStorage.getItem("notification");
 
   console.log(isLoggedIn, username, rollno);
 
   useEffect(() => {
-    
-   getData();
+    getData();
     fetchComments();
   }, []);
 
@@ -109,7 +106,7 @@ const additionalArgument = localStorage.getItem("notification");
 
   const initializeTextInputs = (length) => {
     const initialTextInputs = Array(length).fill("");
-    
+
     setTextInputs(initialTextInputs);
   };
 
@@ -128,7 +125,13 @@ const additionalArgument = localStorage.getItem("notification");
     const currentStatus = studentAges[index];
 
     // Call the handlePutData function to update the status for the student
-    await handlePutData(projects._id, studentId, weekName, currentStatus, textInputs);
+    await handlePutData(
+      projects._id,
+      studentId,
+      weekName,
+      currentStatus,
+      textInputs
+    );
 
     // Do something with the status, e.g., send it to an API or update state
     console.log(`Status for card ${index}:`, currentStatus);
@@ -232,7 +235,7 @@ const additionalArgument = localStorage.getItem("notification");
 
   return (
     <div>
-      <MenuAppBar title={pageTitle} additionalProp={additionalArgument}/>
+      <MenuAppBar title={pageTitle} additionalProp={additionalArgument} />
 
       <div>
         <Typography variant="h4" align="center">
@@ -249,23 +252,19 @@ const additionalArgument = localStorage.getItem("notification");
         </Grid>
       </div>
 
-
-
       <div>
         <h2>Comments</h2>
-        {mycom!=undefined && mycom.map((comment, index) => (
-         <Card key={index}>
-
-         <CardContent>
-           <Typography variant="h6">{comment.name}</Typography>
-           <Typography>{comment.comment}</Typography>
-         </CardContent>
-       </Card>
-
-            ))}   
+        {mycom != undefined &&
+          mycom.map((comment, index) => (
+            <Card key={index}>
+              <CardContent>
+                <Typography variant="h6">{comment.name}</Typography>
+                <Typography>{comment.comment}</Typography>
+              </CardContent>
+            </Card>
+          ))}
         {comments.map((comment, index) => (
           <Card key={index}>
-
             <CardContent>
               <Typography variant="h6">{comment.name}</Typography>
               <Typography>{comment.comment}</Typography>

@@ -3,17 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Stack, TextField, Box } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import label from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password1, setPassword] = useState("");
-  const [Rollno, setRollno] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -22,8 +18,8 @@ function Login() {
     if (localStorage.getItem("isLoggedIn")){
       navigate('/rep');
     }
-  },[])
-
+  })
+console.log(isLoggedIn)
   const handleInputChange = (e) => {
     if (e.target.name === "username") {
       setUsername(e.target.value);

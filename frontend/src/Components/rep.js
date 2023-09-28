@@ -9,24 +9,17 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Login } from "@mui/icons-material";
-import LogoutButton from "./LogoutButton";
 import MenuAppBar from "./nav_bar";
-import { useNavigate } from "react-router-dom";
 
 
 
 const REP = () => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [projects_registered, setprojects_registered] = useState([]);
   const [buttonVariant, setButtonVariant] = useState("outlined");
   const pageTitle = "Home Dashboard";
   const [additionalArgument,setAdditionalArgument]=useState() ;
-  const navigate = useNavigate();
   
-  // console.log(rollno)
-  // console.log(username)
 
   useEffect(() => {
     getData();

@@ -11,7 +11,6 @@ import { Box, List } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { alignProperty } from '@mui/material/styles/cssUtils';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
