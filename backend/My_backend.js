@@ -265,17 +265,6 @@ app.patch('/api/signup/:userId', async (req, res) => {
 });
 
 
-
-// // Connect to the database
-// async function connectDB() {
-//   try {
-//     await client.connect();
-//     console.log('Connected to the database');
-//   } catch (error) {
-//     console.error('Error connecting to the database:', error);
-//   }
-// }
-
 // Close the database connection
 function closeDB() {
   client.close()
