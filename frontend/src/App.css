@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.input{
+
+  align-content: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.page_Title{
+  font-family:'Roboto', sans-serif ;
+  text-align: center;
+}
+
+
+.box {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  align-items: stretch;
+  gap:20px;
+  margin: 2%;
+  flex-wrap: row wrap;
+}
+
+/* Add this to your CSS file */
+.project-button {
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.project-button:hover {
+  background-color: #3f51b5; /* Change the color to your desired hover background color */
+  color: white; /* Change the color to your desired hover text color */
+}
+
+
+.resbox {
+  display: flex;
+
+  
+  flex-wrap: row wrap;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
