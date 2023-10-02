@@ -11,7 +11,8 @@ This project is made for learning the Basic concepts of NodeJS, ReactJS, MongoDB
 The project aims to create a web-based platform that enables students and teachers to collaborate on projects, manage progress, and provide valuable feedback for a constructive learning experience.
 
 ### Basic UI Diagram: 
-![Final 2023-08-04-1423](https://github.com/Avndreddy/Effective-Student-Project-Management-System/assets/80995929/be88bab4-c18c-48e1-87f2-9cb081bb25f2)
+![Final 2023-08-04-1423](https://github.com/Avndreddy/Effective-Student-Project-Management-System/assets/80995929/fbe3d985-5281-493b-8a6d-9ed1a3d7b664)
+
 
 
 ### SOFTWARE REQUIREMENTS
